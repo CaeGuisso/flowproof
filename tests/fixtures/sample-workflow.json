@@ -1,0 +1,25 @@
+{
+  "name": "Boas-vindas ao cliente",
+  "nodes": [
+    { "id": "1", "name": "Webhook", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0], "webhookId": "abc-123", "parameters": { "path": "boas-vindas", "httpMethod": "POST" } },
+    { "id": "2", "name": "Preparar", "type": "n8n-nodes-base.set", "typeVersion": 3.4, "position": [220, 0],
+      "parameters": { "assignments": { "assignments": [
+        { "id": "a", "name": "status", "value": "ativo", "type": "string" },
+        { "id": "b", "name": "creditos", "value": "10", "type": "number" }
+      ] }, "includeOtherFields": true } },
+    { "id": "3", "name": "Enviar Slack", "type": "n8n-nodes-base.slack", "typeVersion": 2, "position": [440, 0],
+      "credentials": { "slackApi": { "id": "77", "name": "Slack da agencia" } },
+      "parameters": { "channel": "#vendas", "text": "Novo cliente" } },
+    { "id": "4", "name": "HTTP", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4, "position": [660, 0],
+      "parameters": { "url": "https://api.exemplo.com/v1", "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "Authorization", "value": "Bearer abcdefghijklmnop123456" } ] },
+        "apiKey": "super-secreta-123", "contato": "maria@cliente.com", "dinamico": "={{ $json.token }}" } }
+  ],
+  "connections": {
+    "Webhook": { "main": [[{ "node": "Preparar", "type": "main", "index": 0 }]] },
+    "Preparar": { "main": [[{ "node": "Enviar Slack", "type": "main", "index": 0 }]] },
+    "Enviar Slack": { "main": [[{ "node": "HTTP", "type": "main", "index": 0 }]] }
+  },
+  "pinData": { "Webhook": [{ "json": { "cpf": "123.456.789-00" } }] },
+  "meta": { "instanceId": "deadbeef" }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "flowproof",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma de qualidade e testes para workflows do n8n.",
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "dev": "node --watch --disable-warning=ExperimentalWarning src/server/main.ts",
+    "start": "node --disable-warning=ExperimentalWarning dist/server.mjs",
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.server.json && tsc -p tsconfig.web.json",
+    "test": "node --disable-warning=ExperimentalWarning --test --test-concurrency=1 tests/*.test.ts",
+    "test:e2e": "node --disable-warning=ExperimentalWarning scripts/e2e.mjs",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.27.7",
+    "playwright": "^1.56.0",
+    "typescript": "^6.0.3"
+  }
+}
