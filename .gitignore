@@ -1,9 +1,23 @@
+# Dependencies
 node_modules/
-data/
-dist/
-public/assets/
+
+# Environment variables
 .env
+.env.*
+!.env.example
+
+# Data and databases
+data/
 *.db
 *.db-wal
 *.db-shm
+
+# Build
+dist/
+public/assets/
+
+# Tests
 test-results/
+
+# Logs
+*.log
